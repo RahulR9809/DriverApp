@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
 class StatusService{
@@ -22,13 +23,21 @@ class StatusService{
 
     if (response.statusCode == 201) {
       final responseData = jsonDecode(response.body);
-      print("Update successful: ${responseData['data']}");
+      if (kDebugMode) {
+        print("Update successful: ${responseData['data']}");
+      }
     } else {
-      print("Failed to update: ${response.statusCode}");
-      print("Error response: ${response.body}");
+      if (kDebugMode) {
+        print("Failed to update: ${response.statusCode}");
+      }
+      if (kDebugMode) {
+        print("Error response: ${response.body}");
+      }
     }
   } catch (error) {
-    print("Error occurred: $error");
+    if (kDebugMode) {
+      print("Error occurred: $error");
+    }
   }
 }
 }

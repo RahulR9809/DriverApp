@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,30 +11,39 @@ class RideController {
     required String driverId,
     required String status,
   }) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    final token = pref.getString('accesstoken');
-    final url = Uri.parse('$baseUrl/accept-ride');
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    final body = jsonEncode({
-      'tripId': tripId,
-      'driverId': driverId,
-      'status': status,
-    });
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      final token = pref.getString('accesstoken');
+      final url = Uri.parse('$baseUrl/accept-ride');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      final body = jsonEncode({
+        'tripId': tripId,
+        'driverId': driverId,
+        'status': status,
+      });
 
-    final response = await http.post(url, headers: headers, body: body);
+      final response = await http.post(url, headers: headers, body: body);
 
-    if (response.statusCode == 201) {
-      final responseData = jsonDecode(response.body);
-      print( '$responseData');
-      return responseData;
-    } else if (response.statusCode == 400) {
-      throw Exception('Bad Request: No necessary data to process request');
-    } else {
-      throw Exception(
-          'Failed to accept ride. Status code: ${response.statusCode}');
+      if (response.statusCode == 201) {
+        final responseData = jsonDecode(response.body);
+        if (kDebugMode) {
+          print('this is from the webservice$responseData');
+        }
+        return responseData;
+      } else if (response.statusCode == 400) {
+        throw Exception('Bad Request: No necessary data to process request');
+      } else {
+        throw Exception(
+            'Failed to accept ride. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
+      rethrow;
     }
   }
 
@@ -42,15 +52,15 @@ class RideController {
     required String status,
     required String tripId,
   }) async {
-    final url = Uri.parse('$baseUrl/reject-ride');
-
-    final body = {
-      'driverId': driverId,
-      'status': status,
-      'tripId': tripId,
-    };
-
     try {
+      final url = Uri.parse('$baseUrl/reject-ride');
+
+      final body = {
+        'driverId': driverId,
+        'status': status,
+        'tripId': tripId,
+      };
+
       SharedPreferences pref = await SharedPreferences.getInstance();
       final token = pref.getString('accesstoken');
       final response = await http.post(
@@ -63,12 +73,18 @@ class RideController {
       );
 
       if (response.statusCode == 200) {
-        print('Ride Rejected Successfully: ${response.body}');
+        if (kDebugMode) {
+          print('Ride Rejected Successfully: ${response.body}');
+        }
       } else {
-        print('Failed to reject ride: ${response.body}');
+        if (kDebugMode) {
+          print('Failed to reject ride: ${response.body}');
+        }
       }
     } catch (e) {
-      print('Error occurred: $e');
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
   }
 
@@ -77,32 +93,37 @@ class RideController {
     required String tripId,
     required String sessionOtp, // Represents the OTP from session
   }) async {
-    final url = Uri.parse('$baseUrl/start-ride');
-
-    final body = {
-      'tripOtp': tripOtp,
-      'tripId': tripId,
-    };
-
     try {
+      final url = Uri.parse('$baseUrl/start-ride');
+
+      final body = {
+        'tripOtp': tripOtp,
+        'tripId': tripId,
+      };
+
       final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':
-              'Bearer $sessionOtp', // Assuming session OTP is used as a token
+          'Authorization': 'Bearer $sessionOtp', // Assuming session OTP is used as a token
         },
         body: jsonEncode(body),
       );
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('Ride Started Successfully: ${responseData['tripDetail']}');
+        if (kDebugMode) {
+          print('Ride Started Successfully: ${responseData['tripDetail']}');
+        }
       } else {
-        print('Failed to start ride: ${response.body}');
+        if (kDebugMode) {
+          print('Failed to start ride: ${response.body}');
+        }
       }
     } catch (e) {
-      print('Error occurred: $e');
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
   }
 
@@ -110,14 +131,14 @@ class RideController {
     required String tripId,
     required String userId,
   }) async {
-    final url = Uri.parse('$baseUrl/completeRide');
-
-    final body = {
-      'tripId': tripId,
-      'userId': userId,
-    };
-
     try {
+      final url = Uri.parse('$baseUrl/completeRide');
+
+      final body = {
+        'tripId': tripId,
+        'userId': userId,
+      };
+
       final response = await http.post(
         url,
         headers: {
@@ -128,12 +149,18 @@ class RideController {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        print('Ride Completed Successfully: ${responseData['message']}');
+        if (kDebugMode) {
+          print('Ride Completed Successfully: ${responseData['message']}');
+        }
       } else {
-        print('Failed to complete ride: ${response.body}');
+        if (kDebugMode) {
+          print('Failed to complete ride: ${response.body}');
+        }
       }
     } catch (e) {
-      print('Error occurred: $e');
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
   }
 }

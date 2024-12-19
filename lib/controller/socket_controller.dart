@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -17,11 +17,13 @@ class DriverSocketService {
   }
 
   // Connect the driver app to the server and listen for events
-  Future<void> connect(BuildContext context, Function(Map<String, dynamic>)onRideRequestReceived) async {
+  Future<void> connect( Function(Map<String, dynamic>)onRideRequestReceived) async {
     String? driverId = await _getDriverId();
 
     if (driverId == null) {
-      print('Cannot connect without a valid driver ID');
+      if (kDebugMode) {
+        print('Cannot connect without a valid driver ID');
+      }
       return;
     }
 
@@ -34,29 +36,41 @@ class DriverSocketService {
     socket.connect();
 
     socket.onConnect((_) {
-      print('Driver connected successfully: $driverId');
+      if (kDebugMode) {
+        print('Driver connected successfully: $driverId');
+      }
       socket.emit('driver-connected', driverId); // Emit the driver ID to the server
     });
 
     socket.onConnectError((error) {
-      print("Connection error: $error");
+      if (kDebugMode) {
+        print("Connection error: $error");
+      }
     });
 
     socket.onError((error) {
-      print("Socket error: $error");
+      if (kDebugMode) {
+        print("Socket error: $error");
+      }
     });
 
     socket.onDisconnect((_) {
-      print('Driver disconnected from the server');
+      if (kDebugMode) {
+        print('Driver disconnected from the server');
+      }
     });
 
     socket.onReconnect((attempt) {
-      print('Reconnection attempt: $attempt');
+      if (kDebugMode) {
+        print('Reconnection attempt: $attempt');
+      }
     });
 
     // Listen for ride requests from the server and call the callback function
     socket.on('ride-request', (data) {
-      print('Received ride request: $data');
+      if (kDebugMode) {
+        print('Received ride request: $data');
+      }
       onRideRequestReceived(data);  // Pass the data to the callback in Ridepage
     });
   }
@@ -78,7 +92,9 @@ Future<Map<String, dynamic>?> checkRideRequests() async {
 
     // Listen for the server's response
     socket.once('ride-requests-response', (data) {
-      print('Ride requests response: $data');
+      if (kDebugMode) {
+        print('Ride requests response: $data');
+      }
       completer.complete(data as Map<String, dynamic>?); // Resolve the completer with the response
     });
 
@@ -86,12 +102,16 @@ Future<Map<String, dynamic>?> checkRideRequests() async {
     return completer.future.timeout(
       const Duration(seconds: 5),
       onTimeout: () {
-        print('Timeout while waiting for ride request response.');
+        if (kDebugMode) {
+          print('Timeout while waiting for ride request response.');
+        }
         return null;
       },
     );
   } catch (e) {
-    print('Error in checkRideRequests: $e');
+    if (kDebugMode) {
+      print('Error in checkRideRequests: $e');
+    }
     return null;
   }
 }

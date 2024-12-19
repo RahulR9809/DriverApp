@@ -42,6 +42,7 @@ dependencies:
   image_picker: ^1.1.2
   latlong2: ^0.9.1
   mapbox_gl: ^0.16.0
+  meta: ^1.15.0
   shared_preferences: ^2.3.2
   slider_button: ^2.1.0
   socket_io_client: ^3.0.2
@@ -69,6 +70,9 @@ flutter:
     - asset/Car.jpg
     - asset/offline.png
     - asset/online (1).png
+    - asset/start.png
+    - asset/end.png
+    - asset/chat.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

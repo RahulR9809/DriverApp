@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Map<String, dynamic>? userData;
-final driveip='10.0.2.2';
+const driveip='10.0.2.2';
 class AuthService {
   String baseUrl = "http://$driveip:3001/api/auth/";
 
@@ -47,7 +47,9 @@ class AuthService {
 
         final data = json.decode(response.body);
         if (response.statusCode == 201) {
-          print(data);
+          if (kDebugMode) {
+            print(data);
+          }
           return data['message'];
         } else {
           return data['message'];
@@ -74,7 +76,9 @@ class AuthService {
         }
 
         final data = json.decode(response.body);
-        print(data);
+        if (kDebugMode) {
+          print(data);
+        }
         return data['message'];
       } else {
         throw Exception('Failed to resend OTP: ${response.body}');
@@ -98,7 +102,9 @@ class AuthService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final userData = data['data'];
-        print(data);
+        if (kDebugMode) {
+          print(data);
+        }
         // final String message = data['message'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userId', userData['_id']);
@@ -129,9 +135,15 @@ class AuthService {
       if (response.statusCode == 200) {
         final dynamic data = json.decode(response.body);
         final coordi=data['coordinates'];
-        print(coordi);
-        print('accesstoken:${data['accessToken']}');
-        print(response.body);
+        if (kDebugMode) {
+          print(coordi);
+        }
+        if (kDebugMode) {
+          print('accesstoken:${data['accessToken']}');
+        }
+        if (kDebugMode) {
+          print(response.body);
+        }
         SharedPreferences pref = await SharedPreferences.getInstance();
           String accesstoken=data['accessToken'];
         pref.setString('accesstoken', accesstoken);

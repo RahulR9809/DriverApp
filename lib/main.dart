@@ -1,6 +1,9 @@
 import 'package:employerapp/Authentication/bloc/auth_bloc.dart';
+import 'package:employerapp/chat/bloc/chat_bloc.dart';
 import 'package:employerapp/controller/auth_controller.dart';
 import 'package:employerapp/Authentication/auth_intropage/intro.dart';
+import 'package:employerapp/controller/chat_controller.dart';
+import 'package:employerapp/controller/chat_socketcontroller.dart';
 import 'package:employerapp/controller/ride_controller.dart';
 import 'package:employerapp/controller/socket_controller.dart';
 import 'package:employerapp/customBottomNav/bloc/bottom_nav_bloc.dart';
@@ -8,8 +11,10 @@ import 'package:employerapp/mainpage/mainpage.dart';
 import 'package:employerapp/ridepage.dart/bloc/ride_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+DriverSocketChatService driverSocketChatService=DriverSocketChatService();
+ChatService chatService=ChatService();
 void main() async {
+  driverSocketChatService.initializeSocket();
   runApp(const MyApp());
 }
 
@@ -33,6 +38,9 @@ class MyApp extends StatelessWidget {
           create: (context) => RideBloc(rideController,socketService: socketService,)
         ),
         
+          BlocProvider(
+          create: (context) => ChatBloc(chatService:chatService )
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(primaryColor: Colors.black),

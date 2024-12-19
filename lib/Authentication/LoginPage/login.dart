@@ -3,7 +3,6 @@ import 'package:employerapp/Authentication/bloc/auth_bloc.dart';
 import 'package:employerapp/Authentication/pending_page/pending.dart';
 import 'package:employerapp/core/colors.dart';
 import 'package:employerapp/mainpage/mainpage.dart';
-import 'package:employerapp/profilepage/profilepage.dart';
 import 'package:employerapp/widgets/refactored.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
