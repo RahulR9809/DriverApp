@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ChatService {
   final String baseUrl='http://10.0.2.2:3001/api/chat';
 
@@ -14,6 +16,8 @@ Future<void> sendMessage({
   required String userId,
 }) async {
   try {
+ SharedPreferences pref = await SharedPreferences.getInstance();
+      final String? loginToken = pref.getString('accesstoken');
     // Debug print
     print('Request Body: ${{
       "senderId": senderId,
@@ -23,6 +27,7 @@ Future<void> sendMessage({
       "senderType": senderType,
       "driverId": driverId,
       "userId": userId,
+      // "token":loginToken
     }}');
 
     final response = await http.post(
@@ -61,14 +66,14 @@ Future<void> sendMessage({
   }) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/chat/messages?tripId=$tripId'), // Example endpoint
+        Uri.parse('$baseUrl/messages/$tripId'), // Example endpoint
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         final data = jsonDecode(response.body);
         return data['messages']; // Assuming API returns {"messages": [...]}
       } else {

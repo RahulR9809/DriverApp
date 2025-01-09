@@ -20,13 +20,13 @@ class Login extends StatelessWidget {
         children: [
           // Background with a gradient color
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientlist,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [CustomColors.black, CustomColors.darkGrey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
           ),
           Center(
             child: SingleChildScrollView(
@@ -36,7 +36,7 @@ class Login extends StatelessWidget {
                   if (state is LoadingState) {
                     const CircularProgressIndicator();
                   } else if (state is ErrorState) {
-                    showSnackBar(context, "Wrong email or password", red);
+                    showSnackBar(context, "Wrong email or password", CustomColors.red);
                   }
                    else if (state is PendingState) {
                     Navigator.pushReplacement(
@@ -45,13 +45,13 @@ class Login extends StatelessWidget {
                     );
                   } 
                   else if (state is LoadedState) {
-                    showSnackBar(context, 'Successfully logged in', green);
+                    showSnackBar(context, 'Successfully logged in', CustomColors.green);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   } else if (state is BlockedState) {
-                    showSnackBar(context, 'your account is Blocked', red);
+                    showSnackBar(context, 'your account is Blocked', CustomColors.red);
                   }
                 },
                 child: Column(
@@ -65,7 +65,7 @@ class Login extends StatelessWidget {
                           Icon(
                             Icons.electric_car,
                             size: 80,
-                            color: white,
+                            color: CustomColors.white,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -73,7 +73,7 @@ class Login extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
-                              color: white,
+                              color: CustomColors.white,
                             ),
                           ),
                           SizedBox(height: 8),
@@ -81,7 +81,7 @@ class Login extends StatelessWidget {
                             'Your Eco-Friendly Travel Solution',
                             style: TextStyle(
                               fontSize: 18,
-                              color:lightgrey,
+                              color:CustomColors.lightGrey,
                             ),
                           ),
                         ],
@@ -116,7 +116,7 @@ class Login extends StatelessWidget {
 
                         // Check email
                         if (email.isEmpty) {
-                          showSnackBar(context, 'Email cannot be empty', red);
+                          showSnackBar(context, 'Email cannot be empty', CustomColors.red);
                           return;
                         }
                         final emailRegex = RegExp(
@@ -124,19 +124,19 @@ class Login extends StatelessWidget {
                         );
                         if (!emailRegex.hasMatch(email)) {
                           showSnackBar(
-                              context, 'Please enter a valid email', red);
+                              context, 'Please enter a valid email', CustomColors.red);
                           return;
                         }
 
                         // Check password
                         if (password.isEmpty) {
                           showSnackBar(
-                              context, 'Password cannot be empty', red);
+                              context, 'Password cannot be empty', CustomColors.red);
                           return;
                         }
                         if (password.length < 6) {
                           showSnackBar(context,
-                              'Password must be at least 6 characters', red);
+                              'Password must be at least 6 characters', CustomColors.red);
                           return;
                         }
 
@@ -155,7 +155,7 @@ class Login extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text('Don\'t have an account?',
-                            style: TextStyle(color: white)),
+                            style: TextStyle(color:CustomColors. white)),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -166,7 +166,7 @@ class Login extends StatelessWidget {
                           },
                           child: const Text(
                             'Sign Up',
-                            style: TextStyle(color: white),
+                            style: TextStyle(color: CustomColors.white),
                           ),
                         ),
                       ],

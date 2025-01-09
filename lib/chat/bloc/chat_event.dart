@@ -6,20 +6,13 @@ sealed class ChatEvent {}
 
 
 
-class ChatSocketConnectedevent extends ChatEvent{
-final String driverId;
-
-  ChatSocketConnectedevent({required this.driverId});
-}
-
-class ChatSocketDisconnectedevent extends ChatEvent{}
-
 
 
 class MessageReceived extends ChatEvent {
   final String message;
+  final String senderid;
 
-  MessageReceived(this.message);
+  MessageReceived(this.message,this.senderid);
 }
 
 
@@ -45,8 +38,8 @@ class SendMessage extends ChatEvent {
 // }
 
 class LoadMessages extends ChatEvent {
-  final String token;
-  final String tripId;
+  final String? token;
+  final String? tripId;
 
-  LoadMessages({required this.token, required this.tripId});
+  LoadMessages({ this.token,  this.tripId});
 }

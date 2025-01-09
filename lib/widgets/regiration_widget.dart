@@ -39,7 +39,7 @@ class ProfileImageUpload extends StatelessWidget {
                   child: const CircleAvatar(
                     backgroundColor: Colors.teal,
                     radius: 20,
-                    child: Icon(Icons.edit, size: 16, color: white),
+                    child: Icon(Icons.edit, size: 16, color: CustomColors.white),
                   ),
                 ),
               ),
@@ -48,7 +48,7 @@ class ProfileImageUpload extends StatelessWidget {
           const SizedBox(height: 10),
           const Text('Profile Image',
               style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, color: white)),
+                  fontSize: 16, fontWeight: FontWeight.w500, color: CustomColors.white)),
         ],
       ),
     );
@@ -75,7 +75,7 @@ class StaticImageUploadSection extends StatelessWidget {
       children: [
         Text(title,
             style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w600, color: white)),
+                fontSize: 18, fontWeight: FontWeight.w600, color: CustomColors.white)),
         const SizedBox(height: 10),
         GestureDetector(
           onTap: onPickImage,
@@ -149,7 +149,7 @@ class VehicleTypeSelection extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 5),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: selectedType == type ? Colors.teal.withOpacity(0.1) : white,
+            color: selectedType == type ? Colors.teal.withOpacity(0.1) : CustomColors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
                 color: selectedType == type
@@ -166,7 +166,7 @@ class VehicleTypeSelection extends StatelessWidget {
               const SizedBox(height: 10),
               Text(type,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                      fontSize: 16, fontWeight: FontWeight.w500, color: CustomColors.black)),
             ],
           ),
         ),
@@ -187,7 +187,7 @@ class SelectionLabel extends StatelessWidget {
       style: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: white,
+        color: CustomColors.white,
       ),
     );
   }

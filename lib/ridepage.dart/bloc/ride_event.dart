@@ -32,7 +32,7 @@
 
 
 
-import 'package:mapbox_gl/mapbox_gl.dart';
+
 
 abstract class RideEvent {}
 
@@ -52,28 +52,9 @@ class RideRequestReceived extends RideEvent {
 }
 
 class RideAcceptedEvent extends RideEvent {
-  final double? startLatitude;
-  final double? startLongitude;
-  final double? endLatitude;
-  final double? endLongitude;
-
-  RideAcceptedEvent({
-    this.startLatitude,
-    this.startLongitude,
-    this.endLatitude,
-    this.endLongitude,
-  });
-}
 
 
-
-class ResumeSimulationEvent extends RideEvent {
-  final double endLatitude;
-  final double endLongitude;
-  ResumeSimulationEvent({
-    required this.endLatitude,
-    required this.endLongitude,
-  });
+  RideAcceptedEvent();
 }
 
 
@@ -81,11 +62,41 @@ class RideRejected extends RideEvent {}
 
 
 
-// class ChatSocketConnectedevent extends RideEvent{
-// final String driverId;
 
-//   ChatSocketConnectedevent({required this.driverId});
-// }
 
-// class ChatSocketDisconnectedevent extends RideEvent{}
 
+
+
+
+
+
+
+class StartRideEvent extends RideEvent {
+  final String tripOtp;
+  final String? tripId;
+
+  StartRideEvent({
+    required this.tripOtp,
+     this.tripId,
+  });
+}
+
+class CompleteRideEvent extends RideEvent {
+  final String? tripId;
+  final String? userId;
+
+  CompleteRideEvent({
+     this.tripId,
+     this.userId,
+  });
+}
+
+
+
+class PicupSimulationEvent extends RideEvent{}
+
+
+
+
+
+class AnimationCompleted extends RideEvent {}

@@ -53,13 +53,13 @@ class _OtpPageState extends State<OtpPage> {
           children: [
             // Gradient background
             Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: gradientlist,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+                decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [CustomColors.black, CustomColors.darkGrey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
             ),
             Center(
               child: SingleChildScrollView(
@@ -71,7 +71,7 @@ class _OtpPageState extends State<OtpPage> {
                     Container(
                       height: 250, // Height for the GIF container
                       decoration: BoxDecoration(
-                        color: white.withOpacity(0.1),
+                        color: CustomColors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ClipRRect(
@@ -88,7 +88,7 @@ class _OtpPageState extends State<OtpPage> {
                       'Enter the OTP sent to your email',
                       style: TextStyle(
                         fontSize: 20,
-                        color: white,
+                        color: CustomColors.white,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -112,7 +112,7 @@ class _OtpPageState extends State<OtpPage> {
                           showSnackBar(
                               context, 'OTP sent successfully', Colors.green);
                         } else if (state is ErrorState) {
-                          showSnackBar(context, 'Failed', red);
+                          showSnackBar(context, 'Failed', CustomColors.red);
                         } else if (state is LoadingState) {
                           const CircularProgressIndicator();
                         } else if (state is VerifiedState) {
@@ -173,7 +173,7 @@ class _OtpPageState extends State<OtpPage> {
         maxLength: 1,
         decoration: InputDecoration(
           filled: true,
-          fillColor: white,
+          fillColor: CustomColors.white,
           counterText: '',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

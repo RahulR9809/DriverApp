@@ -1,3 +1,5 @@
+
+
 // import 'package:employerapp/Authentication/LoginPage/login.dart';
 // import 'package:employerapp/Authentication/auth_signup/auth_signup.dart';
 // import 'package:employerapp/core/colors.dart';
@@ -9,31 +11,43 @@
 
 //   @override
 //   Widget build(BuildContext context) {
+
 //     return Scaffold(
 //       body: Container(
 //         decoration: const BoxDecoration(
-// gradient: LinearGradient(colors: gradientlist) 
 //         ),
 //         child: Column(
 //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //           children: [
-//             // Top image with design enhancements
+//             // Top image with enhancements
 //             Stack(
 //               alignment: Alignment.center,
 //               children: [
-//                 ClipRRect(
-//                   borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10),top: Radius.circular(10)), // Rounded corners
-//                   child: Image.asset(
-//                     'asset/Man track taxi driver cab on tablet map.jpg', // Replace with your image path
-//                     height: 300,
-//                     width: double.infinity,
-//                     fit: BoxFit.cover,
+//                 Container(
+//                   margin: const EdgeInsets.symmetric(horizontal: 20),
+//                   decoration: BoxDecoration(
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: Colors.black.withOpacity(0.2),
+//                         blurRadius: 10,
+//                         offset: const Offset(0, 4),
+//                       ),
+//                     ],
+//                     borderRadius: BorderRadius.circular(15),
+//                   ),
+//                   child: ClipRRect(
+//                     borderRadius: BorderRadius.circular(15),
+//                     child: Image.asset(
+//                       'asset/Man track taxi driver cab on tablet map.jpg',
+//                       height: 280,
+//                       width: double.infinity,
+//                       fit: BoxFit.cover,
+//                     ),
 //                   ),
 //                 ),
-                
 //               ],
 //             ),
-        
+
 //             // Text section
 //             const Padding(
 //               padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -43,9 +57,10 @@
 //                   Text(
 //                     'Welcome to Electra Ride',
 //                     style: TextStyle(
-//                       fontSize: 30,
-//                       fontWeight: FontWeight.bold,
-//                       color: white,
+//                       fontSize: 32,
+//                       fontWeight: FontWeight.w700,
+//                       color: CustomColors.white,
+//                       letterSpacing: 1.2,
 //                     ),
 //                     textAlign: TextAlign.center,
 //                   ),
@@ -54,7 +69,8 @@
 //                     'Effortless EV Rides Await',
 //                     style: TextStyle(
 //                       fontSize: 20,
-//                       color: lightgrey,
+//                       color: CustomColors.lightGrey,
+//                       fontStyle: FontStyle.italic,
 //                     ),
 //                     textAlign: TextAlign.center,
 //                   ),
@@ -63,40 +79,68 @@
 //                     'Experience eco-friendly travel with us! Sign up or log in to explore a convenient, sustainable way to navigate the city.',
 //                     style: TextStyle(
 //                       fontSize: 16,
-//                       color: lightgrey,
+//                       color: CustomColors.lightGrey,
+//                       height: 1.5,
 //                     ),
+//                     textAlign: TextAlign.center,
 //                   ),
 //                 ],
 //               ),
 //             ),
-        
+
 //             // Buttons section
 //             Padding(
 //               padding: const EdgeInsets.symmetric(horizontal: 24.0),
 //               child: Column(
 //                 children: [
-//                   // Login Button
-//                   actionButton(
-//                     context,
-//                     ' Login ',
-//                     () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(builder: (context) => const Login()),
-//                       );
-//                     },
+//                   // Login Button with shadow and refined style
+//                   Container(
+//                     decoration: BoxDecoration(
+//                       boxShadow: [
+//                         BoxShadow(
+//                           color: Colors.black.withOpacity(0.1),
+//                           blurRadius: 8,
+//                           offset: const Offset(0, 4),
+//                         ),
+//                       ],
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                     child: actionButton(
+//                       context,
+//                       ' Login ',
+//                       () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => const Login()),
+//                         );
+//                       },
+//                     ),
 //                   ),
 //                   const SizedBox(height: 16),
-//                   // Sign Up Button
-//                   actionButton(
-//                     context,
-//                     'Sign Up',
-//                     () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(builder: (context) => AuthSignup()),
-//                       );
-//                     },
+//                   // Sign Up Button with shadow and refined style
+//                   Container(
+//                     decoration: BoxDecoration(
+//                       boxShadow: [
+//                         BoxShadow(
+//                           color: Colors.black.withOpacity(0.1),
+//                           blurRadius: 8,
+//                           offset: const Offset(0, 4),
+//                         ),
+//                       ],
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                     child: actionButton(
+//                       context,
+//                       'Sign Up',
+//                       () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => AuthSignup()),
+//                         );
+//                       },
+//                     ),
 //                   ),
 //                 ],
 //               ),
@@ -107,6 +151,8 @@
 //     );
 //   }
 // }
+
+
 
 
 
@@ -122,14 +168,20 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Background with a black and grey gradient for a modern look
+      backgroundColor: CustomColors.lightGrey,
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: gradientlist),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [CustomColors.black, CustomColors.darkGrey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Top image with enhancements
+            // Top image with dark container and shadow for a bold effect
             Stack(
               alignment: Alignment.center,
               children: [
@@ -138,18 +190,19 @@ class IntroPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                        color: Colors.black.withOpacity(0.6),
+                        blurRadius: 30,
+                        offset: const Offset(0, 8),
                       ),
                     ],
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(20),
+                    color: CustomColors.black,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
                       'asset/Man track taxi driver cab on tablet map.jpg',
-                      height: 280,
+                      height: 300,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
@@ -158,7 +211,7 @@ class IntroPage extends StatelessWidget {
               ],
             ),
 
-            // Text section
+            // Text section with white and light grey combo for contrast
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
@@ -167,10 +220,10 @@ class IntroPage extends StatelessWidget {
                   Text(
                     'Welcome to Electra Ride',
                     style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: white,
-                      letterSpacing: 1.2,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColors.white, // Light text on dark background
+                      letterSpacing: 1.5,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -178,9 +231,10 @@ class IntroPage extends StatelessWidget {
                   Text(
                     'Effortless EV Rides Await',
                     style: TextStyle(
-                      fontSize: 20,
-                      color: lightgrey,
+                      fontSize: 24,
+                      color: CustomColors.white,
                       fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -189,8 +243,9 @@ class IntroPage extends StatelessWidget {
                     'Experience eco-friendly travel with us! Sign up or log in to explore a convenient, sustainable way to navigate the city.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: lightgrey,
+                      color: CustomColors.white,
                       height: 1.5,
+                      fontWeight: FontWeight.w300,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -198,47 +253,57 @@ class IntroPage extends StatelessWidget {
               ),
             ),
 
-            // Buttons section
+            // Buttons section with black and white contrast
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 children: [
-                  // Login Button with shadow and refined style
+                  // Login Button with white text on black background
                   Container(
+                    width: double.infinity,
+                    height: 55,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 8,
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
+                      color: CustomColors.white, // White background for contrast
                     ),
                     child: actionButton(
+                      
                       context,
-                      ' Login ',
+                      'Login',
                       () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Login()),
+                            builder: (context) => const Login(),
+                          ),
                         );
+                        
                       },
+                      Colors.white
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Sign Up Button with shadow and refined style
+                  // Sign Up Button with black background and white text
                   Container(
+                    width: double.infinity,
+                    height: 55,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 8,
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
+                      color: CustomColors.black, // Black background for the button
                     ),
                     child: actionButton(
                       context,
@@ -247,9 +312,12 @@ class IntroPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AuthSignup()),
+                            builder: (context) => AuthSignup(),
+                          ),
                         );
                       },
+                                            Colors.white
+
                     ),
                   ),
                 ],

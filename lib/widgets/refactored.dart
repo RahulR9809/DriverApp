@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 // Custom-styled button function with icon intro
-Widget actionButton(BuildContext context, String text, VoidCallback onPressed) {
+Widget actionButton(BuildContext context, String text, VoidCallback onPressed, Color color) {
   return ElevatedButton.icon(
     onPressed: onPressed,
     label: Text(
@@ -13,12 +13,12 @@ Widget actionButton(BuildContext context, String text, VoidCallback onPressed) {
       style: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: white,
+        color: CustomColors.black,
       ),
     ),
     style: ElevatedButton.styleFrom(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40.0),
-      backgroundColor: const Color(0xFF1A73E8), // Button background color
+      backgroundColor: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
@@ -68,7 +68,7 @@ class ReusableButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 18,),
+            style: const TextStyle(fontSize: 18,color: Colors.black),
           ),
         ),
       ),
@@ -108,12 +108,12 @@ final String? Function(String?)? validator;
           obscureText: isPassword,
           decoration: InputDecoration(
             labelText: label,
-            labelStyle: const TextStyle(color: deepPurple),
-            prefixIcon: Icon(icon, color:deepPurple),
+            labelStyle: const TextStyle(color: CustomColors.deepPurple),
+            prefixIcon: Icon(icon, color:CustomColors.deepPurple),
             border: InputBorder.none,
             
           ),
-          style: const TextStyle(color:black),
+          style: const TextStyle(color:CustomColors.black),
         ),
       ),
     );
@@ -143,14 +143,14 @@ class ConfirmDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: onCancel,
-          child: const Text('Cancel', style: TextStyle(color: red)),
+          child: const Text('Cancel', style: TextStyle(color: CustomColors.red)),
         ),
         ElevatedButton(
           onPressed: onConfirm,
           style: ElevatedButton.styleFrom(
-            backgroundColor:green,
+            backgroundColor:CustomColors.green,
           ),
-          child: const Text('Confirm',style: TextStyle(color: white),),
+          child: const Text('Confirm',style: TextStyle(color: CustomColors.white),),
         ),
       ],
     );

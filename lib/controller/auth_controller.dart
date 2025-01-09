@@ -71,6 +71,7 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final cookie = response.headers['set-cookie'];
+        print('cookie:$cookie');
         if (cookie != null) {
           await storeSessionCookie(cookie);
         }

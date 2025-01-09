@@ -1,4 +1,5 @@
 
+import 'package:employerapp/core/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:employerapp/Authentication/auth_intropage/intro.dart';
@@ -9,6 +10,7 @@ class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
+ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _ProfilePageState extends State<ProfilePage> {
   String? name;
@@ -20,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String? profileImg;
   String? licenseImg;
   String? vehiclePermit;
-
+CustomColors customcolors=CustomColors();
   @override
   void initState() {
     super.initState();
@@ -55,27 +57,78 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
+             key: _scaffoldKey, 
+
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         elevation: 5,
         centerTitle: true,
         leading: IconButton(
           onPressed: () async {
-            SharedPreferences logpref = await SharedPreferences.getInstance();
-            showDialog(
-              context: context,
-              builder: (context) {
-                return _buildLogoutDialog(context, logpref);
-              },
-            );
+           
+            _scaffoldKey.currentState?.openDrawer();
           },
-          icon: const Icon(Icons.logout, color: Colors.white),
+          icon: const Icon(Icons.menu, color: Colors.white),
         ),
         title: const Text(
           'My Profile',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
         ),
       ),
+      
+
+
+  drawer: Drawer(
+  child: Column(
+    children: <Widget>[
+      // Drawer Header
+      
+      const Divider(), // Divider between the header and other items
+
+      // Menu Items
+      ListTile(
+        leading: const Icon(Icons.home, color:CustomColors.green),
+        title: const Text('Home'),
+        onTap: () {
+          // Handle home navigation
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.settings, color: CustomColors.green),
+        title: const Text('Settings'),
+        onTap: () {
+          // Handle settings navigation
+        },
+      ),
+      ListTile(
+        leading: const Icon(Icons.history, color: CustomColors.green),
+        title: const Text('Ride History'),
+        onTap: () {
+          // Handle ride history navigation
+        },
+      ),
+      const Divider(),
+
+      // Logout Button
+  ListTile(
+  leading: const Icon(Icons.exit_to_app, color: Colors.red),
+  title: const Text('Logout', style: TextStyle(color: Colors.red)),
+  onTap: () async {
+ SharedPreferences logpref = await SharedPreferences.getInstance();
+            showDialog(
+              context: context,
+              builder: (context) {
+                return _buildLogoutDialog(context, logpref);
+              },
+            ); 
+  },
+),
+
+    ],
+  ),
+),
+
+
       body: SingleChildScrollView(
         child: Column(
           children: [

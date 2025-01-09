@@ -8,6 +8,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DriverSocketService {
   late IO.Socket socket;
+  Function(Map<String, dynamic>)? onTripcancelledCallback;
 
   // Method to retrieve the driver ID from SharedPreferences
   Future<String?> _getDriverId() async {
@@ -73,12 +74,25 @@ class DriverSocketService {
       }
       onRideRequestReceived(data);  // Pass the data to the callback in Ridepage
     });
+
+
+
+        socket.on('cancel-ride', (data) {
+      print('message from cancelSocket:$data');
+      if (data != null && onTripcancelledCallback != null) {
+        onTripcancelledCallback!(data);
+      }
+    });
+
   }
 
+
+  // cancel-ride
+
   // Close the socket connection
-  void disconnect() {
-    socket.disconnect();
-  }
+  // void disconnect() {
+  //   socket.disconnect();
+  // }
   
 
   // Method to check if there are any ride requests available

@@ -22,13 +22,13 @@ class AuthSignup extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientlist,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
+               decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [CustomColors.black, CustomColors.darkGrey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
           ),
           Center(
             child: SingleChildScrollView(
@@ -46,7 +46,7 @@ class AuthSignup extends StatelessWidget {
                           Icon(
                             Icons.electric_car,
                             size: 80,
-                            color: white,
+                            color: CustomColors.white,
                           ),
                           SizedBox(height: 20),
                           Text(
@@ -54,7 +54,7 @@ class AuthSignup extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
-                              color: white,
+                              color: CustomColors.white,
                             ),
                           ),
                           SizedBox(height: 8),
@@ -98,13 +98,13 @@ class AuthSignup extends StatelessWidget {
                       listener: (context, state) {
                         if (state is SignupSuccess) {
                           showSnackBar(
-                              context, 'OTP sent to verify your account',green);
+                              context, 'OTP sent to verify your account',CustomColors.green);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const OtpPage()),
                           );
                         } else if (state is ErrorState) {
-                          showSnackBar(context, 'Failed to create an account',red);
+                          showSnackBar(context, 'Failed to create an account',CustomColors.red);
                         }
                       },
                       builder: (context, state) {
@@ -140,7 +140,7 @@ class AuthSignup extends StatelessWidget {
                       children: [
                         const Text(
                           'Already have an account?',
-                          style: TextStyle(color:white),
+                          style: TextStyle(color:CustomColors.white),
                         ),
                         TextButton(
                           onPressed: () {
@@ -151,7 +151,7 @@ class AuthSignup extends StatelessWidget {
                           },
                           child: const Text(
                             'Login',
-                            style: TextStyle(color:white),
+                            style: TextStyle(color:CustomColors.white),
                           ),
                         ),
                       ],
@@ -170,7 +170,7 @@ class AuthSignup extends StatelessWidget {
   bool _validateFields(BuildContext context) {
     // Name validation
     if (signupnamecontroller.text.isEmpty) {
-      showSnackBar(context, 'Name cannot be empty',red);
+      showSnackBar(context, 'Name cannot be empty',CustomColors.red);
       return false;
     }
 
@@ -178,30 +178,30 @@ class AuthSignup extends StatelessWidget {
     final email = signupemailcontroller.text;
     final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (email.isEmpty) {
-      showSnackBar(context, 'Email cannot be empty',red);
+      showSnackBar(context, 'Email cannot be empty',CustomColors.red);
       return false;
     } else if (!emailRegex.hasMatch(email)) {
-      showSnackBar(context, 'Please enter a valid email',red);
+      showSnackBar(context, 'Please enter a valid email',CustomColors.red);
       return false;
     }
 
     // Phone validation
     final phone = signupphonecontroller.text;
     if (phone.isEmpty) {
-      showSnackBar(context, 'Phone cannot be empty',red);
+      showSnackBar(context, 'Phone cannot be empty',CustomColors.red);
       return false;
     } else if (phone.length != 10 || !RegExp(r'^\d{10}$').hasMatch(phone)) {
-      showSnackBar(context, 'Phone number must be exactly 10 digits',red);
+      showSnackBar(context, 'Phone number must be exactly 10 digits',CustomColors.red);
       return false;
     }
 
     // Password validation
     final password = signuppasswordcontroller.text;
     if (password.isEmpty) {
-      showSnackBar(context, 'Password cannot be empty',red);
+      showSnackBar(context, 'Password cannot be empty',CustomColors.red);
       return false;
     } else if (password.length < 6) {
-      showSnackBar(context, 'Password must be at least 6 characters',red);
+      showSnackBar(context, 'Password must be at least 6 characters',CustomColors.red);
       return false;
     }
 

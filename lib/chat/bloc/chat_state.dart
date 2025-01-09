@@ -6,32 +6,12 @@ sealed class ChatState {}
 final class ChatInitial extends ChatState {}
 
 
-
-
-  class ChatSocketConnectedstate extends ChatState{
-final String driverId;
-
-  ChatSocketConnectedstate({required this.driverId});
-}
-
-class ChatSocketDisconnectedstate extends ChatState{}
+class ChatLoading extends ChatState{}
 
 
 
-// class ChatMessageSent extends ChatState {}
-
-// class ChatMessageReceived extends ChatState {
-//   final String message;
-//   ChatMessageReceived(this.message);
-// }
 
 class ChatMessageSent extends ChatState {}
-
-// class ChatMessageReceived extends ChatState {
-//   final String message;
-
-//   ChatMessageReceived(this.message);
-// }
 
 
 class ChatMessagesLoaded extends ChatState {
@@ -43,4 +23,15 @@ class ChatError extends ChatState{
   final String message;
 
   ChatError({required this.message});
+}
+
+
+class ChatSentMessagesUpdated extends ChatState {
+  final List<Map<String, dynamic>> messages;
+  ChatSentMessagesUpdated({required this.messages});
+}
+
+class ChatReceivedMessagesUpdated extends ChatState {
+  final List<Map<String, dynamic>> messages;
+  ChatReceivedMessagesUpdated({required this.messages});
 }

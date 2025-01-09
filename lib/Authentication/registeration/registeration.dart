@@ -34,27 +34,27 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
 
   bool _validateForm() {
     if (profileImage == null) {
-      showSnackBar(context, 'Please upload a profile image', red);
+      showSnackBar(context, 'Please upload a profile image', CustomColors.red);
       return false;
     }
     if (_licenseNumberController.text.isEmpty) {
-      showSnackBar(context, 'Please enter a license number', red);
+      showSnackBar(context, 'Please enter a license number', CustomColors.red);
       return false;
     }
     if (licenseImage == null) {
-      showSnackBar(context, 'Please upload your license image', red);
+      showSnackBar(context, 'Please upload your license image', CustomColors.red);
       return false;
     }
     if (vehicleType == null) {
-      showSnackBar(context, 'Please select a vehicle type', red);
+      showSnackBar(context, 'Please select a vehicle type', CustomColors.red);
       return false;
     }
     if (_rcNumberController.text.isEmpty) {
-      showSnackBar(context, 'Please enter an RC number', red);
+      showSnackBar(context, 'Please enter an RC number', CustomColors.red);
       return false;
     }
     if (vehicleType == 'Auto' && vehiclePermit == null) {
-      showSnackBar(context, 'Please upload the vehicle permit', red);
+      showSnackBar(context, 'Please upload the vehicle permit', CustomColors.red);
       return false;
     }
     return true;
@@ -64,8 +64,12 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: gradient,
+           decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [CustomColors.black, CustomColors.darkGrey],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Stack(
           children: [
@@ -133,7 +137,7 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
                                   builder: (context) => const Login()));
                         } else if (state is ErrorState) {
                           showSnackBar(
-                              context, 'Error submitting details', red);
+                              context, 'Error submitting details', CustomColors.red);
                         }
                       },
                       builder: (context, state) {
@@ -152,7 +156,7 @@ class _DriverRegistrationPageState extends State<DriverRegistrationPage> {
                                 ),
                               );
                               showSnackBar(
-                                  context, 'Registration submitted!', green);
+                                  context, 'Registration submitted!', CustomColors.green);
                             }
                           },
                         );

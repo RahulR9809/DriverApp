@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         
           BlocProvider(
-          create: (context) => ChatBloc(chatService:chatService )
+          create: (context) => ChatBloc()
         ),
       ],
       child: MaterialApp(

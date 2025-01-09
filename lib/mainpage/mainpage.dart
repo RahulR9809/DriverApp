@@ -2,6 +2,8 @@ import 'package:employerapp/customBottomNav/bloc/bottom_nav_bloc.dart';
 import 'package:employerapp/customBottomNav/nav_page.dart';
 import 'package:employerapp/home/home_page.dart';
 import 'package:employerapp/profilepage/profilepage.dart';
+import 'package:employerapp/ridepage.dart/completedrideButton.dart';
+import 'package:employerapp/ridepage.dart/otp.dart';
 import 'package:employerapp/ridepage.dart/ridepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +19,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
-    const HomePage(),          // Your home page (index 0)
-    const RidePage(),         // Your car page (index 1)
-    const ProfilePage(),   // Your profile page (index 2)
+    const HomePage(),
+    const RidePage(),     
+    const ProfilePage(),  
   ];
 
   @override

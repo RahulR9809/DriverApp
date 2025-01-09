@@ -268,26 +268,48 @@
 
 
 
-
-
 // import 'package:employerapp/chat/bloc/chat_bloc.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+
+// class Message {
+//   final String text;
+//   final bool isSender;
+
+//   Message({required this.text, required this.isSender});
+// }
+
 // class ChatPage extends StatefulWidget {
-//   const ChatPage({super.key});
+//   const ChatPage({Key? key}) : super(key: key);
 
 //   @override
 //   _ChatPageState createState() => _ChatPageState();
 // }
-
 // class _ChatPageState extends State<ChatPage> {
 //   late ChatBloc _chatBloc;
 //   final TextEditingController _messageController = TextEditingController();
+//   final ScrollController _scrollController = ScrollController(); // ✅ Scroll controller
 
 //   @override
 //   void initState() {
 //     super.initState();
-//     _chatBloc = BlocProvider.of<ChatBloc>(context);
+//     // _chatBloc = BlocProvider.of<ChatBloc>(context);
+//     _initializeChat();
+//   }
+
+//   Future<void> _initializeChat() async {
+//     // final prefs = await SharedPreferences.getInstance();
+//     // final driverId = prefs.getString('login_id') ?? '';
+//     // _chatBloc.add(ChatSocketConnectedevent(driverId: driverId));
+//     _chatBloc.add(LoadMessages());
+//   }
+
+//   @override
+//   void dispose() {
+//     _messageController.dispose();
+//     _scrollController.dispose(); // ✅ Dispose the scroll controller
+//     super.dispose();
 //   }
 
 //   @override
@@ -299,80 +321,113 @@
 //       ),
 //       body: BlocBuilder<ChatBloc, ChatState>(
 //         builder: (context, state) {
-//           List<String> messages = [];
-//           if (state is ChatMessagesLoaded) {
-//             messages = state.messages;
+//           if (state is ChatLoading) {
+//             return const Center(child: CircularProgressIndicator());
 //           }
 
-//           return Column(
+//           if (state is ChatMessagesLoaded) {
+//             return _buildChatList(state.messages);
+//           }
+
+//           if (state is ChatError) {
+//             return Center(
+//               child: Text(
+//                 state.message,
+//                 style: const TextStyle(color: Colors.red),
+//               ),
+//             );
+//           }
+
+//           return const Center(child: Text('No messages yet.'));
+//         },
+//       ),
+//     );
+//   }
+
+//   // ✅ Updated chat list to scroll to the bottom when new messages arrive
+//   Widget _buildChatList(List<Message> messages) {
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       if (_scrollController.hasClients) {
+//         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+//       }
+//     });
+
+//     return Column(
+//       children: [
+//         Expanded(
+//           child: ListView.builder(
+//             controller: _scrollController,
+//             itemCount: messages.length,
+//             itemBuilder: (context, index) {
+//               return _buildChatBubble(
+//                  message: messages[index].text,
+//                 isSender: messages[index].isSender,
+//               );
+//             },
+//           ),
+//         ),
+//         Padding(
+//           padding: const EdgeInsets.all(8.0),
+//           child: Row(
 //             children: [
 //               Expanded(
-//                 child: ListView.builder(
-//                   itemCount: messages.length,
-//                   itemBuilder: (context, index) => Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.end,
-//                       children: [
-//                         Container(
-//                           padding: const EdgeInsets.all(12),
-//                           decoration: BoxDecoration(
-//                             color: Colors.deepPurpleAccent,
-//                             borderRadius: BorderRadius.circular(16),
-//                           ),
-//                           child: Text(
-//                             messages[index],
-//                             style: const TextStyle(color: Colors.white),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
+//                 child: TextField(
+//                   controller: _messageController,
+//                   decoration: const InputDecoration(
+//                     hintText: 'Type a message...',
+//                     border: OutlineInputBorder(),
+//                     filled: true,
 //                   ),
 //                 ),
 //               ),
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Row(
-//                   children: [
-//                     Expanded(
-//                       child: TextField(
-//                         controller: _messageController,
-//                         decoration: const InputDecoration(
-//                           hintText: 'Type a message...',
-//                           border: OutlineInputBorder(),
-//                           filled: true,
-//                         ),
+//               IconButton(
+//                 icon: const Icon(Icons.send),
+//                 onPressed: () {
+//                   final message = _messageController.text.trim();
+//                   if (message.isNotEmpty) {
+//                     _chatBloc.add(SendMessage(message: message));
+//                     _messageController.clear();
+//                     WidgetsBinding.instance.addPostFrameCallback((_) {
+//                       if (_scrollController.hasClients) {
+//                         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+//                       }
+//                     });
+//                   } else {
+//                     ScaffoldMessenger.of(context).showSnackBar(
+//                       const SnackBar(
+//                         content: Text('Message cannot be empty'),
 //                       ),
-//                     ),
-//                     IconButton(
-//                      icon: const Icon(Icons.send),
-// onPressed: () {
-//   final message = _messageController.text.trim();
-//   if (message.isNotEmpty) {
-//     print("Dispatching SendMessage event: $message"); // Debug print
-//     _chatBloc.add(SendMessage(message: message)); 
-//     _messageController.clear();
-//   } else {
-//     print("Message is empty");
-//   }
-// },
-
-
-//                     ),
-//                   ],
-//                 ),
+//                     );
+//                   }
+//                 },
 //               ),
-//               if (state is ChatMessageSent)
-//                 const Padding(
-//                   padding: EdgeInsets.all(8.0),
-//                   child: Text(
-//                     'Message Sent',
-//                     style: TextStyle(color: Colors.green),
-//                   ),
-//                 ),
 //             ],
-//           );
-//         },
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+//   Widget _buildChatBubble({required String message, required bool isSender}) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+//       child: Row(
+//         mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+//         children: [
+//           Container(
+//             padding: const EdgeInsets.all(12),
+//             decoration: BoxDecoration(
+//               color: isSender ? Colors.deepPurpleAccent : Colors.grey[300],
+//               borderRadius: BorderRadius.circular(16),
+//             ),
+//             child: Text(
+//               message,
+//               style: TextStyle(
+//                 color: isSender ? Colors.white : Colors.black,
+//               ),
+//             ),
+//           ),
+//         ],
 //       ),
 //     );
 //   }
@@ -380,17 +435,13 @@
 
 
 
-
-
-
-
 import 'package:employerapp/chat/bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({super.key});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -399,116 +450,124 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late ChatBloc _chatBloc;
   final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final List<Map<String, dynamic>> _messages = []; // Local message cache
 
   @override
   void initState() {
     super.initState();
     _chatBloc = BlocProvider.of<ChatBloc>(context);
-
-    // Establish socket connection
     _initializeChat();
-  }
-
-  Future<void> _initializeChat() async {
-    final prefs = await SharedPreferences.getInstance();
-    final driverId = prefs.getString('login_id') ?? '';
-    _chatBloc.add(ChatSocketConnectedevent(driverId: driverId));
+    print("ChatPage: initState called");
   }
 
   @override
   void dispose() {
-    // Disconnect the socket and clean up
-    // _chatBloc.add(ChatSocketDisconnectedevent());
     _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
+    print("ChatPage: dispose called");
+  }
+
+  Future<void> _initializeChat() async {
+    _chatBloc.add(LoadMessages());
+    print("ChatPage: _initializeChat called - Loading messages");
   }
 
   @override
   Widget build(BuildContext context) {
+    print("ChatPage: build called");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat'),
         centerTitle: true,
       ),
-      body: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
-          List<String> messages = [];
-          if (state is ChatMessagesLoaded) {
-            messages = state.messages;
-          }
-
-          return Column(
-            children: [
-              // Chat Messages List
-              Expanded(
-                child: ListView.builder(
-                  reverse: true, // Show newest messages at the bottom
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) => _buildChatBubble(
-                    message: messages[index],
-                    isSender: index.isEven, // Customize sender/receiver logic
-                  ),
-                ),
-              ),
-
-              // Message Input Field
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _messageController,
-                        decoration: const InputDecoration(
-                          hintText: 'Type a message...',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        final message = _messageController.text.trim();
-                        if (message.isNotEmpty) {
-                          _chatBloc.add(SendMessage(message: message));
-                          _messageController.clear();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Message cannot be empty'),
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-              // Error State Feedback
-              if (state is ChatError)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    state.message,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-            ],
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: BlocListener<ChatBloc, ChatState>(
+              listener: (context, state) {
+                if (state is ChatReceivedMessagesUpdated) {
+                  print("ChatPage: New message received");
+                  _updateMessages(state.messages);
+                }
+                if (state is ChatSentMessagesUpdated) {
+                  print("ChatPage: New message sent");
+                  _updateMessages(state.messages);
+                }
+              },
+              child: _buildChatList(),
+            ),
+          ),
+          _buildMessageInputField(),
+        ],
       ),
     );
   }
 
-  // Build Chat Bubble
+  void _updateMessages(List<Map<String, dynamic>> newMessages) {
+    setState(() {
+      _messages.clear();
+      _messages.addAll(newMessages);
+    });
+    _scrollToBottom();
+  }
+
+  Widget _buildChatList() {
+    print("ChatPage: _buildChatList called, message count = ${_messages.length}");
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: _messages.length,
+      itemBuilder: (context, index) {
+        print("ChatPage: _buildChatBubble called, message = ${_messages[index]['message']}");
+        return _buildChatBubble(
+          message: _messages[index]['message'],
+          isSender: _messages[index]['isSender'],
+        );
+      },
+    );
+  }
+
+  Widget _buildMessageInputField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _messageController,
+              decoration: const InputDecoration(
+                hintText: 'Type a message...',
+                border: OutlineInputBorder(),
+                filled: true,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.send),
+            onPressed: () {
+              final message = _messageController.text.trim();
+              print("ChatPage: Send button pressed, message = $message");
+              if (message.isNotEmpty) {
+                _chatBloc.add(SendMessage(message: message));
+                _messageController.clear();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Message cannot be empty')),
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildChatBubble({required String message, required bool isSender}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: Row(
-        mainAxisAlignment:
-            isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(12),
@@ -526,5 +585,19 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
     );
+  }
+
+  void _scrollToBottom() {
+    print("ChatPage: _scrollToBottom called");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+        print("ChatPage: Scrolling to bottom completed");
+      }
+    });
   }
 }
