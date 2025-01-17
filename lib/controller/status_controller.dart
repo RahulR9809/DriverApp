@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
 class StatusService{
-  final baseurl='http://192.168.1.34:3001/api/trip/driver';
+  final baseurl='http://192.168.24.144:3001/api/trip/driver';
 
   Future<void> updateDriverOnlineStatus( List<double> currentLocation,) async {
             SharedPreferences pref = await SharedPreferences.getInstance();

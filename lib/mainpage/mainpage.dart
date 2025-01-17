@@ -1,6 +1,7 @@
 import 'package:employerapp/customBottomNav/bloc/bottom_nav_bloc.dart';
 import 'package:employerapp/customBottomNav/nav_page.dart';
 import 'package:employerapp/home/home_page.dart';
+import 'package:employerapp/payment/payment.dart';
 import 'package:employerapp/profilepage/profilepage.dart';
 import 'package:employerapp/ridepage.dart/completedrideButton.dart';
 import 'package:employerapp/ridepage.dart/otp.dart';

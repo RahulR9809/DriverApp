@@ -269,29 +269,3 @@ class RideRequestCard extends StatelessWidget {
   }
 }
 
-
-//  class CustomSwitch extends StatelessWidget {
-//   final bool value;
-//   final ValueChanged<bool> onChanged;
-
-//   const CustomSwitch({super.key, required this.value, required this.onChanged});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Transform.scale(
-//       scale: 1.5, // Makes the switch larger
-//       child: Switch(
-//         value: value,
-//         onChanged: onChanged,
-//         activeColor: Colors.white,
-//         activeTrackColor: Colors.green.shade800,
-//         inactiveThumbColor: Colors.white,
-//         inactiveTrackColor: Colors.red.shade700,
-//         thumbColor: MaterialStateProperty.all(Colors.blue.shade600), // Corrected here
-//         trackColor: MaterialStateProperty.all(const Color.fromARGB(255, 115, 117, 122)), // Corrected here
-//         splashRadius: 30.0, // Adds a nice splash effect
-//         overlayColor: MaterialStateProperty.all(Colors.green.shade300.withOpacity(0.5)), // Corrected here
-//       ),
-//     );
-//   }
-// }

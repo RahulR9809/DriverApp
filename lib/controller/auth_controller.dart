@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+final ipConfig='192.168.24.52';
 Map<String, dynamic>? userData;
-const driveip='10.0.2.2';
+
 class AuthService {
-  String baseUrl = "http://$driveip:3001/api/auth/";
+  String baseUrl = "http://$ipConfig:3001/api/auth/";
 
   Future<void> storeSessionCookie(String cookie) async {
     final prefs = await SharedPreferences.getInstance();
@@ -166,9 +166,10 @@ class AuthService {
           'id': data['data']['id'].toString(),
           'isAccepted': data['data']['isAccepted'],
         };
-      } else {
-        throw Exception('Failed to log in: ${response.body}');
-      }
+      }  else if (response.statusCode == 401) {
+        debugPrint('Forbidden: ${response.body}');
+        return {'error': '401'};
+      } 
     } catch (e, stackTrace) {
       if (kDebugMode) {
         print('Error in login: $e');
@@ -191,7 +192,7 @@ class AuthService {
   }) async {
     try {
       final uri =
-          Uri.parse('http://$driveip:3001/api/auth/driver/complete-profile');
+          Uri.parse('http://$ipConfig:3001/api/auth/driver/complete-profile');
       final request = http.MultipartRequest('POST', uri);
 
       request.fields['driverId'] = driverId;

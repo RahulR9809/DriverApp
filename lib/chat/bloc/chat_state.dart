@@ -11,7 +11,6 @@ class ChatLoading extends ChatState{}
 
 
 
-class ChatMessageSent extends ChatState {}
 
 
 class ChatMessagesLoaded extends ChatState {

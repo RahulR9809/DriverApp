@@ -2,6 +2,8 @@
 import 'package:employerapp/core/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 
 // Custom-styled button function with icon intro
@@ -34,10 +36,38 @@ void showSnackBar(BuildContext context, String message,Color color) {
       content: Text(message),
       backgroundColor:color,
       behavior: SnackBarBehavior.floating,
+      duration: const Duration(seconds: 3),
     ),
   );
 }
 
+
+
+class ReachedDialog {
+  static void showLocationReachedDialog(
+    BuildContext context, {
+    required QuickAlertType type,
+    required String title,
+    required String text,
+     Duration? autoCloseDuration,
+  }) {
+    QuickAlert.show(
+      context: context,
+      autoCloseDuration:autoCloseDuration ,
+      barrierDismissible: false,
+      type: type,
+      title: title,
+      text: text,
+      confirmBtnText: 'OK',
+      onConfirmBtnTap: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+}
+
+
+ 
 
 
 class ReusableButton extends StatelessWidget {

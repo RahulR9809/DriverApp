@@ -16,7 +16,7 @@ bool _isOnline = false; // Keep track of online/offline status
 
 List<dynamic>? picuplocationRaw;
 List<dynamic>? droplocationRaw;
-
+   Map<String, dynamic>? cancelsdata;
 
 class RideBloc extends Bloc<RideEvent, RideState> {
   final DriverSocketService socketService;
@@ -33,7 +33,7 @@ class RideBloc extends Bloc<RideEvent, RideState> {
     on<ToggleOnlineStatus>(_onToggleOnlineStatus);
     on<StartRideEvent>(_onStartRide);
     on<CompleteRideEvent>(_onCompleteRide);
-
+on<RideCancelledEvent>(rideCancelled);
 
   }
 
@@ -48,10 +48,7 @@ class RideBloc extends Bloc<RideEvent, RideState> {
         print("Error connecting: $e");
       }
     } 
-    // else {
-    //   driverSocketChatService.disconnect();
-    //   socketService.disconnect();
-    // }
+   
 
     emit(RideOnlineState(_isOnline)); // Emit the updated state
   }
@@ -106,7 +103,7 @@ class RideBloc extends Bloc<RideEvent, RideState> {
         if (driverId != null && tripId != null) {
           final res = await rideController.acceptRide(
             driverId: driverId,
-            status: 'Accepted',
+            status: 'accepted',
             tripId: tripId,
           );
           if (res.isNotEmpty) {
@@ -228,12 +225,18 @@ print('driver chat connected');
     return pref.getString('login_id');
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
+ 
+
+
+
+
+
+  FutureOr<void> rideCancelled(RideCancelledEvent event, Emitter<RideState> emit) {
+cancelsdata=event.rideCancelleddata;
+if(cancelsdata !=null){
+  print('emitting cancelled state');
+emit(RideCancelledState());
+
+}
   }
-
-
-
-
 }

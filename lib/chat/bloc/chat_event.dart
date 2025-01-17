@@ -11,8 +11,8 @@ sealed class ChatEvent {}
 class MessageReceived extends ChatEvent {
   final String message;
   final String senderid;
-
-  MessageReceived(this.message,this.senderid);
+final String time;
+  MessageReceived(this.message,this.senderid, this .time);
 }
 
 
@@ -27,15 +27,11 @@ class SendMessage extends ChatEvent {
     required this.message,
     this.userid,
     this.tripId,
-     this.token,
+     this.token, 
   });
 }
 
-// class MessageReceived extends ChatEvent {
-//   final String message;
 
-//   MessageReceived(this.message);
-// }
 
 class LoadMessages extends ChatEvent {
   final String? token;

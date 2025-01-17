@@ -75,4 +75,4 @@ class ButtonVisibleState extends RideState {}
 
 
 
-
+class RideCancelledState extends RideState{}

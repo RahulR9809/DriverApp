@@ -49,38 +49,75 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+
+
+    // on<ButtonClickedEvent>((event, emit) async {
+    //   if (event.username.isEmpty || event.password.isEmpty) {
+    //     emit(ErrorState(message: 'Username and password cannot be empty.'));
+    //     return;
+    //   }
+
+    //   emit(LoadingState());
+
+    //   try {
+    //     final response =
+    //         await authService.login(event.username, event.password);
+
+    //     if (response != null) {
+    //       final bool isAccepted = response['isAccepted'] ?? false;
+    //       final  isBlocked=response['error'];
+    //       if (kDebugMode) {
+    //         print('is accepted $isAccepted');
+    //       }
+    //       if (!isAccepted) {
+    //         emit(PendingState()); 
+    //       } else if (isAccepted){
+    //         emit(LoadedState());
+    //       } else if(isBlocked){
+    //         emit(BlockedState());
+    //       }
+    //     }
+    //   } catch (e) {
+    //     if (kDebugMode) {
+    //       print('emitting unauth');
+    //     }
+    //     emit(ErrorState(message: 'An error occurred: ${e.toString()}'));
+    //   }
+    // });
+
+
     on<ButtonClickedEvent>((event, emit) async {
-      if (event.username.isEmpty || event.password.isEmpty) {
-        emit(ErrorState(message: 'Username and password cannot be empty.'));
-        return;
+  if (event.username.isEmpty || event.password.isEmpty) {
+    emit(ErrorState(message: 'Username and password cannot be empty.'));
+    return;
+  }
+
+  emit(LoadingState());
+
+  try {
+    final response = await authService.login(event.username, event.password);
+
+    if (response != null) {
+      final bool isAccepted = response['isAccepted'] ?? false;
+final Blocked=response['error'];
+      if (Blocked != null && Blocked == '401') {
+        emit(BlockedState());
+      } else if (!isAccepted) {
+        emit(PendingState());
+      } else {
+        emit(LoadedState());
       }
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print('emitting unauth');
+    }
+    emit(ErrorState(message: 'An error occurred: ${e.toString()}'));
+  }
+});
 
-      emit(LoadingState());
 
-      try {
-        final response =
-            await authService.login(event.username, event.password);
 
-        if (response != null) {
-          final bool isAccepted = response['isAccepted'] ?? false;
-          if (kDebugMode) {
-            print('is accepted $isAccepted');
-          }
-          if (!isAccepted) {
-            emit(PendingState()); 
-          } else if (isAccepted){
-            emit(LoadedState());
-          } else {
-            emit(BlockedState());
-          }
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print('emitting unauth');
-        }
-        emit(ErrorState(message: 'An error occurred: ${e.toString()}'));
-      }
-    });
 
     on<SubmitRegistration>((event, emit) async {
       SharedPreferences pref = await SharedPreferences.getInstance();

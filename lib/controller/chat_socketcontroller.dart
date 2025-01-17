@@ -1,4 +1,5 @@
 
+import 'package:employerapp/controller/auth_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -22,7 +23,7 @@ class DriverSocketChatService {
     }
 
     socket = IO.io(
-      'http://10.0.2.2:3004',
+      'http://$ipConfig:3004',
       IO.OptionBuilder()
       
           .setTransports(['websocket'])

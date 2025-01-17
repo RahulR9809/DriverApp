@@ -9,6 +9,7 @@ import 'package:employerapp/controller/socket_controller.dart';
 import 'package:employerapp/customBottomNav/bloc/bottom_nav_bloc.dart';
 import 'package:employerapp/mainpage/mainpage.dart';
 import 'package:employerapp/ridepage.dart/bloc/ride_bloc.dart';
+import 'package:employerapp/ridepage.dart/map/bloc/animation_state_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 DriverSocketChatService driverSocketChatService=DriverSocketChatService();
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         
           BlocProvider(
           create: (context) => ChatBloc()
+        ),
+         BlocProvider(
+          create: (context) => AnimationStateBloc()
         ),
       ],
       child: MaterialApp(

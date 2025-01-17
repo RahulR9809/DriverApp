@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'auth_controller.dart';
+
 class DriverSocketService {
   late IO.Socket socket;
   Function(Map<String, dynamic>)? onTripcancelledCallback;
@@ -28,10 +30,10 @@ class DriverSocketService {
       return;
     }
 
-    socket = IO.io('http://10.0.2.2:3003', <String, dynamic>{
-       'path': '/socket.io/',
+    socket = IO.io('http://$ipConfig:3003', <String, dynamic>{
+       'path': '/socket.io/trip',
       'transports': ['websocket'],
-      'autoConnect': true,
+      'autoConnect': false,
     });
 
     socket.connect();
@@ -86,49 +88,6 @@ class DriverSocketService {
 
   }
 
-
-  // cancel-ride
-
-  // Close the socket connection
-  // void disconnect() {
-  //   socket.disconnect();
-  // }
-  
-
-  // Method to check if there are any ride requests available
-Future<Map<String, dynamic>?> checkRideRequests() async {
-  try {
-    // Use a Completer to handle the response asynchronously
-    final Completer<Map<String, dynamic>?> completer = Completer();
-
-    // // Emit a request to check for ride requests
-    // socket.emit('check-ride-requests', null);
-
-    // Listen for the server's response
-    socket.once('ride-requests-response', (data) {
-      if (kDebugMode) {
-        print('Ride requests response: $data');
-      }
-      completer.complete(data as Map<String, dynamic>?); // Resolve the completer with the response
-    });
-
-    // Return the response or null if none is received within a timeout
-    return completer.future.timeout(
-      const Duration(seconds: 5),
-      onTimeout: () {
-        if (kDebugMode) {
-          print('Timeout while waiting for ride request response.');
-        }
-        return null;
-      },
-    );
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error in checkRideRequests: $e');
-    }
-    return null;
-  }
-}
 
 }
 

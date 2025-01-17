@@ -1,10 +1,11 @@
+import 'package:employerapp/controller/auth_controller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatService {
-  final String baseUrl='http://10.0.2.2:3001/api/chat';
+  final String baseUrl='http://$ipConfig:3001/api/chat';
 
 Future<void> sendMessage({
   required String senderId,

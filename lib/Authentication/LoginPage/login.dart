@@ -6,9 +6,12 @@ import 'package:employerapp/mainpage/mainpage.dart';
 import 'package:employerapp/widgets/refactored.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +39,10 @@ class Login extends StatelessWidget {
                   if (state is LoadingState) {
                     const CircularProgressIndicator();
                   } else if (state is ErrorState) {
-                    showSnackBar(context, "Wrong email or password", CustomColors.red);
-                  }
+ReachedDialog.showLocationReachedDialog(context,
+                text: 'Wrong email or password.',
+                title: 'Error',
+                type: QuickAlertType.warning);                  }
                    else if (state is PendingState) {
                     Navigator.pushReplacement(
                       context,
@@ -51,8 +56,10 @@ class Login extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   } else if (state is BlockedState) {
-                    showSnackBar(context, 'your account is Blocked', CustomColors.red);
-                  }
+ReachedDialog.showLocationReachedDialog(context,
+                text: 'Your account has been blocked. Please contact support',
+                title: 'Access Denied!',
+                type: QuickAlertType.error);                  }
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
