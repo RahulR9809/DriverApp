@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:employerapp/core/colors.dart';
@@ -39,7 +38,8 @@ class ProfileImageUpload extends StatelessWidget {
                   child: const CircleAvatar(
                     backgroundColor: Colors.teal,
                     radius: 20,
-                    child: Icon(Icons.edit, size: 16, color: CustomColors.white),
+                    child:
+                        Icon(Icons.edit, size: 16, color: CustomColors.white),
                   ),
                 ),
               ),
@@ -48,7 +48,9 @@ class ProfileImageUpload extends StatelessWidget {
           const SizedBox(height: 10),
           const Text('Profile Image',
               style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, color: CustomColors.white)),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColors.white)),
         ],
       ),
     );
@@ -61,7 +63,8 @@ class StaticImageUploadSection extends StatelessWidget {
   final void Function(XFile?) onImagePicked;
   final VoidCallback onPickImage;
 
-  const StaticImageUploadSection({super.key, 
+  const StaticImageUploadSection({
+    super.key,
     required this.title,
     required this.image,
     required this.onImagePicked,
@@ -75,7 +78,9 @@ class StaticImageUploadSection extends StatelessWidget {
       children: [
         Text(title,
             style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w600, color: CustomColors.white)),
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: CustomColors.white)),
         const SizedBox(height: 10),
         GestureDetector(
           onTap: onPickImage,
@@ -86,7 +91,8 @@ class StaticImageUploadSection extends StatelessWidget {
               color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                  color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5)),
+                  color: const Color.fromARGB(255, 255, 255, 255)
+                      .withOpacity(0.5)),
             ),
             child: Stack(
               children: [
@@ -149,7 +155,9 @@ class VehicleTypeSelection extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 5),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: selectedType == type ? Colors.teal.withOpacity(0.1) : CustomColors.white,
+            color: selectedType == type
+                ? Colors.teal.withOpacity(0.1)
+                : CustomColors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
                 color: selectedType == type
@@ -160,13 +168,16 @@ class VehicleTypeSelection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
-              borderRadius: BorderRadius.circular(10), // Apply rounded corners to the image
-              child: Image.asset(image, height: 60, fit: BoxFit.cover),
-            ),
+                borderRadius: BorderRadius.circular(
+                    10), // Apply rounded corners to the image
+                child: Image.asset(image, height: 60, fit: BoxFit.cover),
+              ),
               const SizedBox(height: 10),
               Text(type,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500, color: CustomColors.black)),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: CustomColors.black)),
             ],
           ),
         ),

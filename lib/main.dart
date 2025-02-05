@@ -1,15 +1,16 @@
-import 'package:employerapp/Authentication/bloc/auth_bloc.dart';
-import 'package:employerapp/chat/bloc/chat_bloc.dart';
-import 'package:employerapp/controller/auth_controller.dart';
-import 'package:employerapp/Authentication/auth_intropage/intro.dart';
-import 'package:employerapp/controller/chat_controller.dart';
-import 'package:employerapp/controller/chat_socketcontroller.dart';
-import 'package:employerapp/controller/ride_controller.dart';
-import 'package:employerapp/controller/socket_controller.dart';
-import 'package:employerapp/customBottomNav/bloc/bottom_nav_bloc.dart';
-import 'package:employerapp/mainpage/mainpage.dart';
-import 'package:employerapp/ridepage.dart/bloc/ride_bloc.dart';
-import 'package:employerapp/ridepage.dart/map/bloc/animation_state_bloc.dart';
+import 'package:employerapp/controllers/auth_bloc/auth_bloc.dart';
+import 'package:employerapp/controllers/chat_bloc/chat_bloc.dart';
+import 'package:employerapp/controllers/dash_bloc/bloc/dash_bloc.dart';
+import 'package:employerapp/repository/auth_controller.dart';
+import 'package:employerapp/views/auth/intro_page.dart';
+import 'package:employerapp/repository/chat_controller.dart';
+import 'package:employerapp/repository/chat_socketcontroller.dart';
+import 'package:employerapp/repository/ride_controller.dart';
+import 'package:employerapp/repository/socket_controller.dart';
+import 'package:employerapp/controllers/navbar_bloc/bottom_nav_bloc.dart';
+import 'package:employerapp/views/Nav/main_page.dart';
+import 'package:employerapp/controllers/ride_bloc/ride_bloc.dart';
+import 'package:employerapp/controllers/map_bloc/animation_state_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 DriverSocketChatService driverSocketChatService=DriverSocketChatService();
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
          BlocProvider(
           create: (context) => RideBloc(rideController,socketService: socketService,)
         ),
+
         
           BlocProvider(
           create: (context) => ChatBloc()
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
          BlocProvider(
           create: (context) => AnimationStateBloc()
         ),
+        BlocProvider(create: (context)=>DashBloc())
       ],
       child: MaterialApp(
         theme: ThemeData(primaryColor: Colors.black),
